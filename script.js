@@ -524,3 +524,51 @@ target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 });
 });
+
+// ==========================================
+// BENEFITS SECTION - INTERACTIONS
+// ==========================================
+
+// Initialize Benefits Section
+function initBenefitsSection() {
+    const benefitCards = document.querySelectorAll('.benefit-card');
+    
+    // Add click tracking for analytics (optional)
+    benefitCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const benefitName = this.querySelector('h3').textContent;
+            console.log(`Benefit clicked: ${benefitName}`);
+            // Add your analytics tracking here
+        });
+    });
+    
+    // Add parallax effect on mouse move
+    document.addEventListener('mousemove', (e) => {
+        const cards = document.querySelectorAll('.benefit-card');
+        const mouseX = e.clientX / window.innerWidth - 0.5;
+        const mouseY = e.clientY / window.innerHeight - 0.5;
+        
+        cards.forEach((card, index) => {
+            const speed = (index + 1) * 5;
+            const x = mouseX * speed;
+            const y = mouseY * speed;
+            
+            if (card.matches(':hover')) {
+                card.style.transform = `translateY(-8px) perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
+            }
+        });
+    });
+    
+    // Reset transform on mouse leave
+    document.querySelectorAll('.benefit-card').forEach(card => {
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+        });
+    });
+}
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', function() {
+    // ... existing initialization code ...
+    initBenefitsSection();
+});
